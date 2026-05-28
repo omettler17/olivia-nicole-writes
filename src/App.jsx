@@ -56,11 +56,14 @@ export default function OliviaNicoleWebsite() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fbf8f4] text-[#2f2722] font-serif">
+    <div id="top" className="min-h-screen bg-[#fbf8f4] text-[#2f2722] font-serif">
       <nav className="sticky top-0 z-50 bg-[#fbf8f4]/90 backdrop-blur border-b border-[#e6ded5]">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-5 py-4 md:px-6">
+          <div className="flex items-center justify-between gap-6">
           <div>
-            <h1 className="text-2xl tracking-wide uppercase">Olivia Nicole</h1>
+            <a href="#top" className="block hover:opacity-70 transition" aria-label="Back to top">
+              <h1 className="text-xl tracking-wide uppercase sm:text-2xl">Olivia Nicole</h1>
+            </a>
             <p className="text-sm text-[#7c6c62]">Writer &bull; Teacher &bull; Creative Writing Coach</p>
           </div>
 
@@ -70,16 +73,24 @@ export default function OliviaNicoleWebsite() {
             <a href="#publications" className="hover:opacity-70 transition">Publications</a>
             <a href="#contact" className="hover:opacity-70 transition">Contact</a>
           </div>
+          </div>
+
+          <div className="mt-4 flex gap-4 overflow-x-auto pb-1 text-xs uppercase tracking-wide md:hidden">
+            <a href="#about" className="shrink-0 hover:opacity-70 transition">About</a>
+            <a href="#services" className="shrink-0 hover:opacity-70 transition">Services</a>
+            <a href="#publications" className="shrink-0 hover:opacity-70 transition">Publications</a>
+            <a href="#contact" className="shrink-0 hover:opacity-70 transition">Contact</a>
+          </div>
         </div>
       </nav>
 
-      <section className="max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
+      <section className="max-w-6xl mx-auto px-5 py-14 grid gap-10 sm:px-6 md:grid-cols-2 md:gap-16 md:py-24 md:items-center">
         <div>
           <p className="uppercase tracking-[0.25em] text-sm text-[#8f766b] mb-6">
             Literary Coaching & Editorial Support
           </p>
 
-          <h2 className="text-5xl md:text-6xl leading-tight mb-8">
+          <h2 className="text-4xl leading-tight mb-8 sm:text-5xl md:text-6xl">
             Supporting emerging writers with crafting stronger manuscripts and creative practices.
           </h2>
 
@@ -116,12 +127,12 @@ export default function OliviaNicoleWebsite() {
       </section>
 
       <section className="border-y border-[#e6ded5] bg-[#f6f0ea]">
-        <div className="max-w-5xl mx-auto px-6 py-20 text-center">
+        <div className="max-w-5xl mx-auto px-5 py-16 text-center sm:px-6 md:py-20">
           <p className="uppercase tracking-[0.2em] text-sm text-[#755f54] mb-6">
             Who I Help
           </p>
 
-          <h3 className="text-4xl leading-tight mb-8">
+          <h3 className="text-3xl leading-tight mb-8 md:text-4xl">
             Writers looking for guidance, accountability, and thoughtful feedback outside traditional writing spaces.
           </h3>
 
@@ -150,16 +161,16 @@ export default function OliviaNicoleWebsite() {
         </div>
       </section>
 
-      <section id="about" className="max-w-5xl mx-auto px-6 py-24">
+      <section id="about" className="max-w-5xl mx-auto px-5 py-16 sm:px-6 md:py-24">
         <div className="mb-12">
           <p className="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-4">
             About
           </p>
 
-          <h3 className="text-5xl mb-8">Writing is hard work. Support helps.</h3>
+          <h3 className="text-4xl mb-8 md:text-5xl">Writing is hard work. Support helps.</h3>
         </div>
 
-        <div className="space-y-8 text-lg leading-9 text-[#5f5149]">
+        <div className="space-y-7 text-base leading-8 text-[#5f5149] md:text-lg md:leading-9">
           <p>
             I'll be the first person to admit that writing is hard, and that's because writing isn't just writing. It's revising, planning, reading, building community, and finding the courage to put your work out into the world.
           </p>
@@ -178,14 +189,14 @@ export default function OliviaNicoleWebsite() {
         </div>
       </section>
 
-      <section id="services" className="bg-[#af9d93] text-[#fffaf4] py-24">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-16">
+      <section id="services" className="bg-[#af9d93] text-[#fffaf4] py-16 md:py-24">
+        <div className="max-w-6xl mx-auto px-5 sm:px-6">
+          <div className="mb-12 md:mb-16">
               <p className="uppercase tracking-[0.2em] text-sm text-[#fbf8f4] mb-4">
               Services
             </p>
 
-            <h3 className="text-5xl mb-6">Coaching & Editorial Support</h3>
+            <h3 className="text-4xl mb-6 md:text-5xl">Coaching & Editorial Support</h3>
 
             <p className="text-lg text-[#fffaf4] max-w-3xl leading-8">
               Thoughtful, personalized support for writers at different stages of their creative process.
@@ -193,12 +204,12 @@ export default function OliviaNicoleWebsite() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8 items-stretch">
-            <div className="bg-[#fffaf4] text-[#2f2722] p-8 rounded-3xl shadow-xl shadow-[#6d5d54]/15 border border-[#fffdf9] h-full min-h-[37rem] flex flex-col">
+            <div className="bg-[#fffaf4] text-[#2f2722] p-6 rounded-2xl shadow-xl shadow-[#6d5d54]/15 border border-[#fffdf9] h-full flex flex-col sm:p-8 sm:rounded-3xl lg:min-h-[37rem]">
               <p className="uppercase tracking-[0.15em] text-sm text-[#755f54] mb-4">
                 Best For Most Clients
               </p>
 
-              <h4 className="text-3xl mb-6">Starter Package</h4>
+              <h4 className="text-2xl mb-6 sm:text-3xl">Starter Package</h4>
 
               <p className="leading-8 mb-6 text-[#5f5149]">
                 Four coaching sessions over eight weeks for writers seeking sustained support and momentum.
@@ -217,12 +228,12 @@ export default function OliviaNicoleWebsite() {
               </a>
             </div>
 
-            <div className="bg-[#eee3d8] text-[#2f2722] p-8 rounded-3xl border border-[#f5ece5] shadow-xl shadow-[#6d5d54]/10 h-full min-h-[37rem] flex flex-col">
+            <div className="bg-[#eee3d8] text-[#2f2722] p-6 rounded-2xl border border-[#f5ece5] shadow-xl shadow-[#6d5d54]/10 h-full flex flex-col sm:p-8 sm:rounded-3xl lg:min-h-[37rem]">
               <p className="uppercase tracking-[0.15em] text-sm text-[#755f54] mb-4">
                 1:1 Coaching
               </p>
 
-              <h4 className="text-3xl mb-6">Single Coaching Session</h4>
+              <h4 className="text-2xl mb-6 sm:text-3xl">Single Coaching Session</h4>
 
               <p className="text-[#5f5149] leading-8 mb-6">
                 A 60-minute, pay-as-you-go session for writers who want to try coaching before committing to a package.
@@ -241,12 +252,12 @@ export default function OliviaNicoleWebsite() {
               </a>
             </div>
 
-            <div className="bg-[#e0d0c4] text-[#2f2722] p-8 rounded-3xl border border-[#eaded5] shadow-xl shadow-[#6d5d54]/10 h-full min-h-[37rem] flex flex-col">
+            <div className="bg-[#e0d0c4] text-[#2f2722] p-6 rounded-2xl border border-[#eaded5] shadow-xl shadow-[#6d5d54]/10 h-full flex flex-col sm:p-8 sm:rounded-3xl lg:min-h-[37rem]">
               <p className="uppercase tracking-[0.15em] text-sm text-[#8f766b] mb-4">
                 Poetry-Specific
               </p>
 
-              <h4 className="text-3xl mb-6">Poem Critique</h4>
+              <h4 className="text-2xl mb-6 sm:text-3xl">Poem Critique</h4>
 
               <p className="text-[#5f5149] leading-8 mb-6">
                 Flat-rate critique for poems and chapbook manuscripts, designed for work that needs close, thoughtful attention beyond per-word pricing.
@@ -270,16 +281,16 @@ export default function OliviaNicoleWebsite() {
         </div>
       </section>
 
-      <section id="publications" className="max-w-5xl mx-auto px-6 py-24">
-        <div className="mb-16">
+      <section id="publications" className="max-w-5xl mx-auto px-5 py-16 sm:px-6 md:py-24">
+        <div className="mb-12 md:mb-16">
           <p className="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-4">
             Publications
           </p>
 
-          <h3 className="text-5xl mb-6">Selected Work</h3>
+          <h3 className="text-4xl mb-6 md:text-5xl">Selected Work</h3>
         </div>
 
-        <div className="space-y-6 text-lg">
+        <div className="space-y-6 text-base md:text-lg">
           {publications.map(({ title, publication, url }) => (
             <div
               key={title}
@@ -289,7 +300,7 @@ export default function OliviaNicoleWebsite() {
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                className="text-xl italic underline decoration-[#c3b198] underline-offset-4 transition hover:text-[#8f766b] hover:decoration-[#af9d93]"
+                className="text-lg italic underline decoration-[#c3b198] underline-offset-4 transition hover:text-[#8f766b] hover:decoration-[#af9d93] md:text-xl"
               >
                 "{title}"
               </a>
@@ -301,19 +312,19 @@ export default function OliviaNicoleWebsite() {
         </div>
       </section>
 
-      <section id="contact" className="bg-[#f6f0ea] py-24 border-t border-[#e6ded5]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <section id="contact" className="bg-[#f6f0ea] py-16 border-t border-[#e6ded5] md:py-24">
+        <div className="max-w-4xl mx-auto px-5 text-center sm:px-6">
           <p className="uppercase tracking-[0.2em] text-sm text-[#755f54] mb-4">
             Contact
           </p>
 
-          <h3 className="text-5xl mb-8">Let's work together.</h3>
+          <h3 className="text-4xl mb-8 md:text-5xl">Let's work together.</h3>
 
           <p className="text-lg leading-8 text-[#5f5149] mb-12 max-w-2xl mx-auto">
             Whether you're looking for coaching, editorial support, or guidance reconnecting with your writing practice, I'd love to hear from you.
           </p>
 
-          <div className="bg-[#fffdf9] rounded-[2rem] p-10 shadow-lg shadow-[#af9d93]/20 max-w-2xl mx-auto text-left border border-[#d3cac0]">
+          <div className="bg-[#fffdf9] rounded-2xl p-6 shadow-lg shadow-[#af9d93]/20 max-w-2xl mx-auto text-left border border-[#d3cac0] sm:p-10 sm:rounded-[2rem]">
             <form className="space-y-6" onSubmit={handleContactSubmit}>
               <div>
                 <label className="block mb-2 text-sm uppercase tracking-wide" htmlFor="name">Name</label>
@@ -363,10 +374,10 @@ export default function OliviaNicoleWebsite() {
       </section>
 
       <footer className="bg-[#2f2722] text-[#fbf8f4] py-10">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-4 text-sm">
+        <div className="max-w-6xl mx-auto px-5 flex flex-col gap-4 text-sm sm:px-6 md:flex-row md:justify-between">
           <p>&copy; 2026 Olivia Nicole</p>
 
-          <div className="flex gap-6 uppercase tracking-wide">
+          <div className="flex flex-wrap gap-4 uppercase tracking-wide md:gap-6">
             <a href="#about">About</a>
             <a href="#services">Services</a>
             <a href="#publications">Publications</a>
