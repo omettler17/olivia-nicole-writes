@@ -445,7 +445,7 @@ function BlogIndexPage() {
                 Blog
               </p>
               <h2 className="text-4xl leading-tight mb-8 md:text-6xl">
-                Writing, personal life, travel, and lifestyle.
+                Blogs spilling thoughts on writing, life, and of course, coffee.
               </h2>
               <p className="text-lg leading-8 text-[#5f5149] max-w-3xl">
                 This page will hold new essays and notes as they are published.
@@ -462,18 +462,6 @@ function BlogIndexPage() {
                 Personal Blog
               </a>
             ) : null}
-          </div>
-        </section>
-
-        <section className="border-y border-[#e6ded5] bg-[#f6f0ea]">
-          <div className="max-w-6xl mx-auto px-5 py-16 sm:px-6 md:py-20">
-            <div className="grid gap-4 md:grid-cols-4">
-              {['Writing', 'Personal Life', 'Travel', 'Lifestyle'].map((category) => (
-                <div key={category} className="bg-[#fffdf9] rounded-2xl border border-[#e6ded5] p-6">
-                  <h3 className="text-xl">{category}</h3>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
