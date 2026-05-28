@@ -42,19 +42,6 @@ export default function OliviaNicoleWebsite() {
     },
   ]
 
-  function handleContactSubmit(event) {
-    event.preventDefault()
-
-    const formData = new FormData(event.currentTarget)
-    const name = formData.get('name')
-    const email = formData.get('email')
-    const message = formData.get('message')
-    const subject = encodeURIComponent(`Writing inquiry from ${name}`)
-    const body = encodeURIComponent(`${message}\n\nFrom: ${name}\nEmail: ${email}`)
-
-    window.location.href = `mailto:olivianicolecontact@gmail.com?subject=${subject}&body=${body}`
-  }
-
   return (
     <div id="top" className="min-h-screen bg-[#fbf8f4] text-[#2f2722] font-serif">
       <nav className="sticky top-0 z-50 bg-[#fbf8f4]/90 backdrop-blur border-b border-[#e6ded5]">
@@ -70,16 +57,16 @@ export default function OliviaNicoleWebsite() {
           <div className="hidden md:flex gap-8 text-sm uppercase tracking-wide">
             <a href="#about" className="hover:opacity-70 transition">About</a>
             <a href="#services" className="hover:opacity-70 transition">Services</a>
-            <a href="#publications" className="hover:opacity-70 transition">Publications</a>
             <a href="#contact" className="hover:opacity-70 transition">Contact</a>
+            <a href="#publications" className="hover:opacity-70 transition">Publications</a>
           </div>
           </div>
 
           <div className="mt-4 flex gap-4 overflow-x-auto pb-1 text-xs uppercase tracking-wide md:hidden">
             <a href="#about" className="shrink-0 hover:opacity-70 transition">About</a>
             <a href="#services" className="shrink-0 hover:opacity-70 transition">Services</a>
-            <a href="#publications" className="shrink-0 hover:opacity-70 transition">Publications</a>
             <a href="#contact" className="shrink-0 hover:opacity-70 transition">Contact</a>
+            <a href="#publications" className="shrink-0 hover:opacity-70 transition">Publications</a>
           </div>
         </div>
       </nav>
@@ -281,37 +268,6 @@ export default function OliviaNicoleWebsite() {
         </div>
       </section>
 
-      <section id="publications" className="max-w-5xl mx-auto px-5 py-16 sm:px-6 md:py-24">
-        <div className="mb-12 md:mb-16">
-          <p className="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-4">
-            Publications
-          </p>
-
-          <h3 className="text-4xl mb-6 md:text-5xl">Selected Work</h3>
-        </div>
-
-        <div className="space-y-6 text-base md:text-lg">
-          {publications.map(({ title, publication, url }) => (
-            <div
-              key={title}
-              className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-[#e6ded5] pb-6"
-            >
-              <a
-                href={url}
-                target="_blank"
-                rel="noreferrer"
-                className="text-lg italic underline decoration-[#c3b198] underline-offset-4 transition hover:text-[#8f766b] hover:decoration-[#af9d93] md:text-xl"
-              >
-                "{title}"
-              </a>
-              <p className="uppercase tracking-[0.15em] text-sm text-[#8f766b] mt-2 md:mt-0">
-                {publication}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <section id="contact" className="bg-[#f6f0ea] py-16 border-t border-[#e6ded5] md:py-24">
         <div className="max-w-4xl mx-auto px-5 text-center sm:px-6">
           <p className="uppercase tracking-[0.2em] text-sm text-[#755f54] mb-4">
@@ -325,7 +281,14 @@ export default function OliviaNicoleWebsite() {
           </p>
 
           <div className="bg-[#fffdf9] rounded-2xl p-6 shadow-lg shadow-[#af9d93]/20 max-w-2xl mx-auto text-left border border-[#d3cac0] sm:p-10 sm:rounded-[2rem]">
-            <form className="space-y-6" onSubmit={handleContactSubmit}>
+            <form
+              className="space-y-6"
+              action="https://formsubmit.co/olivianicolecontact@gmail.com"
+              method="POST"
+            >
+              <input type="hidden" name="_subject" value="New writing inquiry from Olivia Nicole Writes" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
               <div>
                 <label className="block mb-2 text-sm uppercase tracking-wide" htmlFor="name">Name</label>
                 <input
@@ -373,6 +336,37 @@ export default function OliviaNicoleWebsite() {
         </div>
       </section>
 
+      <section id="publications" className="max-w-5xl mx-auto px-5 py-16 sm:px-6 md:py-24">
+        <div className="mb-12 md:mb-16">
+          <p className="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-4">
+            Publications
+          </p>
+
+          <h3 className="text-4xl mb-6 md:text-5xl">Selected Work</h3>
+        </div>
+
+        <div className="space-y-6 text-base md:text-lg">
+          {publications.map(({ title, publication, url }) => (
+            <div
+              key={title}
+              className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-[#e6ded5] pb-6"
+            >
+              <a
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-lg italic underline decoration-[#c3b198] underline-offset-4 transition hover:text-[#8f766b] hover:decoration-[#af9d93] md:text-xl"
+              >
+                "{title}"
+              </a>
+              <p className="uppercase tracking-[0.15em] text-sm text-[#8f766b] mt-2 md:mt-0">
+                {publication}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <footer className="bg-[#2f2722] text-[#fbf8f4] py-10">
         <div className="max-w-6xl mx-auto px-5 flex flex-col gap-4 text-sm sm:px-6 md:flex-row md:justify-between">
           <p>&copy; 2026 Olivia Nicole</p>
@@ -380,8 +374,8 @@ export default function OliviaNicoleWebsite() {
           <div className="flex flex-wrap gap-4 uppercase tracking-wide md:gap-6">
             <a href="#about">About</a>
             <a href="#services">Services</a>
-            <a href="#publications">Publications</a>
             <a href="#contact">Contact</a>
+            <a href="#publications">Publications</a>
           </div>
         </div>
       </footer>
