@@ -15,6 +15,45 @@ npm run dev
 npm run build
 ```
 
+## Add a blog post
+
+Blog posts live in `src/blogPosts.js`.
+
+To add a post, copy the starter object inside the `blogPosts` array and change:
+
+- `slug`: lowercase URL name, such as `revision-notes`
+- `title`: the post title
+- `date`: publish date in `YYYY-MM-DD` format
+- `excerpt`: short summary shown on the Blog section
+- `content`: one string per paragraph
+
+Example:
+
+```js
+{
+  slug: 'revision-notes',
+  title: 'Revision Notes',
+  date: '2026-06-01',
+  excerpt: 'A short summary of the post.',
+  content: [
+    'First paragraph.',
+    'Second paragraph.',
+  ],
+}
+```
+
+The site will automatically add the post to the Blog section and create a page at `#/blog/revision-notes`.
+
+## Add a personal blog link
+
+In `src/blogPosts.js`, set `personalBlogUrl` to your external blog URL:
+
+```js
+export const personalBlogUrl = 'https://your-personal-blog.com'
+```
+
+Once that value is filled in, the website will show a separate **Personal Blog** link in the Blog area and on blog post pages.
+
 ## Launch on GitHub Pages
 
 1. Create a new GitHub repository.
