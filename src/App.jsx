@@ -3,7 +3,7 @@ export default function OliviaNicoleWebsite() {
     {
       title: 'Cake',
       publication: 'Quirk',
-      url: 'https://www.uiwquirk.org/',
+      url: 'https://www.uiwquirk.org/poetry2020/cake-olivia-mettler',
     },
     {
       title: 'STALE',
@@ -13,32 +13,32 @@ export default function OliviaNicoleWebsite() {
     {
       title: 'You Know the Cigarette Lighter Works',
       publication: 'South Florida Poetry Journal',
-      url: 'https://www.southfloridapoetryjournal.com/poetry-34-aug-24.html',
+      url: 'https://www.southfloridapoetryjournal.com/poetry-34-aug-24.html#:~:text=Olivia%20Mettler%20is,talk%20to%20birds',
     },
     {
       title: "I keep trying to write a poem about roosters but write the chickens missing feathers on my family's farm instead.",
       publication: 'COOP',
-      url: 'https://coopzine.com',
+      url: 'https://coopzine.com/poetry/mettler-fowl/',
     },
     {
       title: "My Father Doesn't Know I Wasn't a Bird When I Was Born",
       publication: 'COOP',
-      url: 'https://coopzine.com',
+      url: 'https://coopzine.com/poetry/mettler-14/',
     },
     {
       title: 'When my mom forgives my father',
       publication: 'Club Plum',
-      url: 'https://clubplumliteraryjournal.com/vol-5-issue-2/',
+      url: 'https://clubplumliteraryjournal.com/olivia-mettler/',
     },
     {
       title: "When finding your father's porn",
       publication: 'Club Plum',
-      url: 'https://clubplumliteraryjournal.com/vol-5-issue-2/',
+      url: 'https://clubplumliteraryjournal.com/olivia-mettler/',
     },
     {
       title: 'The Whiteness of -',
       publication: 'Heron Tree',
-      url: 'https://herontree.com/volume-11-wrap/',
+      url: 'https://herontree.com/wp-content/uploads/2024/11/mettler1pdf.pdf',
     },
   ]
 
