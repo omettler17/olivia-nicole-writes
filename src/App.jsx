@@ -71,34 +71,17 @@ export default function OliviaNicoleWebsite() {
 
   return (
     <div id="top" className="min-h-screen bg-[#fbf8f4] text-[#2f2722] font-serif">
-      <nav className="sticky top-0 z-50 bg-[#fbf8f4]/90 backdrop-blur border-b border-[#e6ded5]">
-        <div className="max-w-6xl mx-auto px-5 py-4 md:px-6">
-          <div className="flex items-center justify-between gap-6">
-          <div>
-            <a href="#top" className="block hover:opacity-70 transition" aria-label="Back to top">
-              <h1 className="text-xl tracking-wide uppercase sm:text-2xl">Olivia Nicole</h1>
-            </a>
-            <p className="text-sm text-[#7c6c62]">Writer &bull; Teacher &bull; Creative Writing Coach</p>
-          </div>
-
-          <div className="hidden md:flex gap-8 text-sm uppercase tracking-wide">
-            <a href="#about" className="hover:opacity-70 transition">About</a>
-            <a href="#services" className="hover:opacity-70 transition">Services</a>
-            <a href="#/blog" className="hover:opacity-70 transition">Blog</a>
-            <a href="#contact" className="hover:opacity-70 transition">Contact</a>
-            <a href="#publications" className="hover:opacity-70 transition">Publications</a>
-          </div>
-          </div>
-
-          <div className="mt-4 flex gap-4 overflow-x-auto pb-1 text-xs uppercase tracking-wide md:hidden">
-            <a href="#about" className="shrink-0 hover:opacity-70 transition">About</a>
-            <a href="#services" className="shrink-0 hover:opacity-70 transition">Services</a>
-            <a href="#/blog" className="shrink-0 hover:opacity-70 transition">Blog</a>
-            <a href="#contact" className="shrink-0 hover:opacity-70 transition">Contact</a>
-            <a href="#publications" className="shrink-0 hover:opacity-70 transition">Publications</a>
-          </div>
-        </div>
-      </nav>
+      <SiteHeader
+        brandHref="#top"
+        brandLabel="Back to top"
+        links={[
+          { href: '#about', label: 'About' },
+          { href: '#services', label: 'Services' },
+          { href: '#/blog', label: 'Blog' },
+          { href: '#contact', label: 'Contact' },
+          { href: '#publications', label: 'Publications' },
+        ]}
+      />
 
       <section className="max-w-6xl mx-auto px-5 py-14 grid gap-10 sm:px-6 md:grid-cols-2 md:gap-16 md:py-24 md:items-center">
         <div>
@@ -416,26 +399,19 @@ export default function OliviaNicoleWebsite() {
 function BlogIndexPage() {
   return (
     <div id="top" className="min-h-screen bg-[#fbf8f4] text-[#2f2722] font-serif">
-      <nav className="sticky top-0 z-50 bg-[#fbf8f4]/90 backdrop-blur border-b border-[#e6ded5]">
-        <div className="max-w-6xl mx-auto px-5 py-4 sm:px-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <a href="./" className="hover:opacity-70 transition" aria-label="Back to home">
-              <h1 className="text-xl tracking-wide uppercase sm:text-2xl">Olivia Nicole</h1>
-            </a>
-            <div className="flex flex-wrap gap-4 text-xs uppercase tracking-wide sm:text-sm md:gap-8">
-              <a href="./#about" className="hover:opacity-70 transition">About</a>
-              <a href="./#services" className="hover:opacity-70 transition">Services</a>
-              <a href="./#contact" className="hover:opacity-70 transition">Contact</a>
-              <a href="./#publications" className="hover:opacity-70 transition">Publications</a>
-              {personalBlogUrl ? (
-                <a href={personalBlogUrl} target="_blank" rel="noreferrer" className="hover:opacity-70 transition">
-                  Personal Blog
-                </a>
-              ) : null}
-            </div>
-          </div>
-        </div>
-      </nav>
+      <SiteHeader
+        brandHref="./"
+        brandLabel="Back to home"
+        links={[
+          { href: './#about', label: 'About' },
+          { href: './#services', label: 'Services' },
+          { href: './#contact', label: 'Contact' },
+          { href: './#publications', label: 'Publications' },
+          ...(personalBlogUrl
+            ? [{ href: personalBlogUrl, label: 'Personal Blog', external: true }]
+            : []),
+        ]}
+      />
 
       <main>
         <section className="max-w-6xl mx-auto px-5 py-16 sm:px-6 md:py-24">
@@ -501,27 +477,119 @@ function BlogIndexPage() {
   )
 }
 
+function SiteHeader({ brandHref, brandLabel, links, maxWidthClass = 'max-w-6xl' }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  function closeMenu() {
+    setIsMenuOpen(false)
+  }
+
+  return (
+    <nav className="sticky top-0 z-50 bg-[#fbf8f4]/90 backdrop-blur border-b border-[#e6ded5]">
+      <div className={`${maxWidthClass} mx-auto px-5 py-4 sm:px-6`}>
+        <div className="flex items-center justify-between gap-6">
+          <div>
+            <a href={brandHref} className="block hover:opacity-70 transition" aria-label={brandLabel}>
+              <h1 className="text-xl tracking-wide uppercase sm:text-2xl">Olivia Nicole</h1>
+            </a>
+            <p className="text-sm text-[#7c6c62]">Writer &bull; Teacher &bull; Creative Writing Coach</p>
+          </div>
+
+          <div className="hidden md:flex gap-8 text-sm uppercase tracking-wide">
+            {links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noreferrer' : undefined}
+                className="hover:opacity-70 transition"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#c3b198] text-[#2f2722] transition hover:bg-[#f2e9dd] md:hidden"
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setIsMenuOpen((open) => !open)}
+          >
+            <span className="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
+            <span className="flex w-5 flex-col gap-1.5" aria-hidden="true">
+              <span className={`h-0.5 w-full bg-current transition ${isMenuOpen ? 'translate-y-2 rotate-45' : ''}`} />
+              <span className={`h-0.5 w-full bg-current transition ${isMenuOpen ? 'opacity-0' : ''}`} />
+              <span className={`h-0.5 w-full bg-current transition ${isMenuOpen ? '-translate-y-2 -rotate-45' : ''}`} />
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div
+        className={`fixed inset-0 z-40 bg-[#2f2722]/35 transition md:hidden ${
+          isMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+        aria-hidden="true"
+        onClick={closeMenu}
+      />
+
+      <div
+        id="mobile-navigation"
+        className={`fixed right-0 top-0 z-50 h-dvh w-[min(20rem,85vw)] border-l border-[#e6ded5] bg-[#fbf8f4] px-6 py-6 shadow-2xl shadow-[#2f2722]/20 transition-transform duration-300 md:hidden ${
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="mb-10 flex items-start justify-between gap-6">
+          <div>
+            <p className="text-xl tracking-wide uppercase">Olivia Nicole</p>
+            <p className="mt-1 text-sm text-[#7c6c62]">Menu</p>
+          </div>
+          <button
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#c3b198] text-2xl leading-none transition hover:bg-[#f2e9dd]"
+            aria-label="Close menu drawer"
+            onClick={closeMenu}
+          >
+            &times;
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-5 text-lg uppercase tracking-wide">
+          {links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noreferrer' : undefined}
+              className="border-b border-[#e6ded5] pb-4 transition hover:text-[#8f766b]"
+              onClick={closeMenu}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+  )
+}
+
 function BlogPostPage({ post }) {
   return (
     <div id="top" className="min-h-screen bg-[#fbf8f4] text-[#2f2722] font-serif">
-      <nav className="sticky top-0 z-50 bg-[#fbf8f4]/90 backdrop-blur border-b border-[#e6ded5]">
-        <div className="max-w-4xl mx-auto px-5 py-4 sm:px-6">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <a href="./" className="hover:opacity-70 transition" aria-label="Back to home">
-              <h1 className="text-xl tracking-wide uppercase sm:text-2xl">Olivia Nicole</h1>
-            </a>
-            <div className="flex flex-wrap gap-4 text-xs uppercase tracking-wide sm:text-sm">
-              <a href="./#/blog" className="hover:opacity-70 transition">Blog</a>
-              <a href="./#contact" className="hover:opacity-70 transition">Contact</a>
-              {personalBlogUrl ? (
-                <a href={personalBlogUrl} target="_blank" rel="noreferrer" className="hover:opacity-70 transition">
-                  Personal Blog
-                </a>
-              ) : null}
-            </div>
-          </div>
-        </div>
-      </nav>
+      <SiteHeader
+        brandHref="./"
+        brandLabel="Back to home"
+        maxWidthClass="max-w-4xl"
+        links={[
+          { href: './#/blog', label: 'Blog' },
+          { href: './#contact', label: 'Contact' },
+          ...(personalBlogUrl
+            ? [{ href: personalBlogUrl, label: 'Personal Blog', external: true }]
+            : []),
+        ]}
+      />
 
       <main className="max-w-4xl mx-auto px-5 py-16 sm:px-6 md:py-24">
         <a href="./#/blog" className="inline-flex mb-10 text-sm uppercase tracking-wide text-[#8f766b] hover:text-[#2f2722]">
