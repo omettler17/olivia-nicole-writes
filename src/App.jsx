@@ -2,18 +2,20 @@ import { useEffect, useState } from 'react'
 import { blogPosts, personalBlogUrl } from './blogPosts'
 
 export default function OliviaNicoleWebsite() {
-  const [activePostSlug, setActivePostSlug] = useState(() => getActivePostSlug())
+  const [currentHash, setCurrentHash] = useState(() => getCurrentHash())
 
   useEffect(() => {
     function handleHashChange() {
-      setActivePostSlug(getActivePostSlug())
+      setCurrentHash(getCurrentHash())
     }
 
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [])
 
+  const activePostSlug = getActivePostSlug(currentHash)
   const activePost = blogPosts.find((post) => post.slug === activePostSlug)
+  const showBlogIndex = currentHash === '#/blog'
   const showBlogPost = Boolean(activePost)
 
   const publications = [
@@ -63,6 +65,10 @@ export default function OliviaNicoleWebsite() {
     return <BlogPostPage post={activePost} />
   }
 
+  if (showBlogIndex) {
+    return <BlogIndexPage />
+  }
+
   return (
     <div id="top" className="min-h-screen bg-[#fbf8f4] text-[#2f2722] font-serif">
       <nav className="sticky top-0 z-50 bg-[#fbf8f4]/90 backdrop-blur border-b border-[#e6ded5]">
@@ -78,7 +84,7 @@ export default function OliviaNicoleWebsite() {
           <div className="hidden md:flex gap-8 text-sm uppercase tracking-wide">
             <a href="#about" className="hover:opacity-70 transition">About</a>
             <a href="#services" className="hover:opacity-70 transition">Services</a>
-            <a href="#blog" className="hover:opacity-70 transition">Blog</a>
+            <a href="#/blog" className="hover:opacity-70 transition">Blog</a>
             <a href="#contact" className="hover:opacity-70 transition">Contact</a>
             <a href="#publications" className="hover:opacity-70 transition">Publications</a>
           </div>
@@ -87,7 +93,7 @@ export default function OliviaNicoleWebsite() {
           <div className="mt-4 flex gap-4 overflow-x-auto pb-1 text-xs uppercase tracking-wide md:hidden">
             <a href="#about" className="shrink-0 hover:opacity-70 transition">About</a>
             <a href="#services" className="shrink-0 hover:opacity-70 transition">Services</a>
-            <a href="#blog" className="shrink-0 hover:opacity-70 transition">Blog</a>
+            <a href="#/blog" className="shrink-0 hover:opacity-70 transition">Blog</a>
             <a href="#contact" className="shrink-0 hover:opacity-70 transition">Contact</a>
             <a href="#publications" className="shrink-0 hover:opacity-70 transition">Publications</a>
           </div>
@@ -291,57 +297,6 @@ export default function OliviaNicoleWebsite() {
         </div>
       </section>
 
-      <section id="blog" className="bg-[#fbf8f4] py-16 border-t border-[#e6ded5] md:py-24">
-        <div className="max-w-6xl mx-auto px-5 sm:px-6">
-          <div className="mb-12 md:mb-16">
-            <p className="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-4">
-              Blog
-            </p>
-
-            <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
-              <div>
-                <h3 className="text-4xl mb-6 md:text-5xl">Notes on Writing & Practice</h3>
-                <p className="text-lg leading-8 text-[#5f5149] max-w-3xl">
-                  Reflections on craft, teaching, poetry, process, and building a sustainable creative life.
-                </p>
-              </div>
-
-              {personalBlogUrl ? (
-                <a
-                  href={personalBlogUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex justify-center rounded-2xl border border-[#af9d93] px-6 py-4 text-sm uppercase tracking-wide text-[#2f2722] transition hover:bg-[#f2e9dd]"
-                >
-                  Personal Blog
-                </a>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {blogPosts.map((post) => (
-              <article
-                key={post.slug}
-                className="bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-sm shadow-[#af9d93]/10 sm:p-8"
-              >
-                <p className="uppercase tracking-[0.15em] text-sm text-[#8f766b] mb-4">
-                  {formatDate(post.date)}
-                </p>
-                <h4 className="text-2xl mb-4 sm:text-3xl">{post.title}</h4>
-                <p className="leading-8 text-[#5f5149] mb-8">{post.excerpt}</p>
-                <a
-                  href={`#/blog/${post.slug}`}
-                  className="inline-flex rounded-2xl bg-[#2f2722] px-6 py-4 text-sm uppercase tracking-wide text-[#fffaf4] transition hover:bg-[#4b3f38]"
-                >
-                  Read Post
-                </a>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section id="contact" className="bg-[#f6f0ea] py-16 border-t border-[#e6ded5] md:py-24">
         <div className="max-w-4xl mx-auto px-5 text-center sm:px-6">
           <p className="uppercase tracking-[0.2em] text-sm text-[#755f54] mb-4">
@@ -448,12 +403,112 @@ export default function OliviaNicoleWebsite() {
           <div className="flex flex-wrap gap-4 uppercase tracking-wide md:gap-6">
             <a href="#about">About</a>
             <a href="#services">Services</a>
-            <a href="#blog">Blog</a>
+            <a href="#/blog">Blog</a>
             <a href="#contact">Contact</a>
             <a href="#publications">Publications</a>
           </div>
         </div>
       </footer>
+    </div>
+  )
+}
+
+function BlogIndexPage() {
+  return (
+    <div id="top" className="min-h-screen bg-[#fbf8f4] text-[#2f2722] font-serif">
+      <nav className="sticky top-0 z-50 bg-[#fbf8f4]/90 backdrop-blur border-b border-[#e6ded5]">
+        <div className="max-w-6xl mx-auto px-5 py-4 sm:px-6">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <a href="./" className="hover:opacity-70 transition" aria-label="Back to home">
+              <h1 className="text-xl tracking-wide uppercase sm:text-2xl">Olivia Nicole</h1>
+            </a>
+            <div className="flex flex-wrap gap-4 text-xs uppercase tracking-wide sm:text-sm md:gap-8">
+              <a href="./#about" className="hover:opacity-70 transition">About</a>
+              <a href="./#services" className="hover:opacity-70 transition">Services</a>
+              <a href="./#contact" className="hover:opacity-70 transition">Contact</a>
+              <a href="./#publications" className="hover:opacity-70 transition">Publications</a>
+              {personalBlogUrl ? (
+                <a href={personalBlogUrl} target="_blank" rel="noreferrer" className="hover:opacity-70 transition">
+                  Personal Blog
+                </a>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main>
+        <section className="max-w-6xl mx-auto px-5 py-16 sm:px-6 md:py-24">
+          <div className="grid gap-10 md:grid-cols-[1.25fr_0.75fr] md:items-end">
+            <div>
+              <p className="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-5">
+                Blog
+              </p>
+              <h2 className="text-4xl leading-tight mb-8 md:text-6xl">
+                Writing, personal life, travel, and lifestyle.
+              </h2>
+              <p className="text-lg leading-8 text-[#5f5149] max-w-3xl">
+                This page will hold new essays and notes as they are published.
+              </p>
+            </div>
+
+            {personalBlogUrl ? (
+              <a
+                href={personalBlogUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex justify-center rounded-2xl border border-[#af9d93] px-6 py-4 text-sm uppercase tracking-wide text-[#2f2722] transition hover:bg-[#f2e9dd]"
+              >
+                Personal Blog
+              </a>
+            ) : null}
+          </div>
+        </section>
+
+        <section className="border-y border-[#e6ded5] bg-[#f6f0ea]">
+          <div className="max-w-6xl mx-auto px-5 py-16 sm:px-6 md:py-20">
+            <div className="grid gap-4 md:grid-cols-4">
+              {['Writing', 'Personal Life', 'Travel', 'Lifestyle'].map((category) => (
+                <div key={category} className="bg-[#fffdf9] rounded-2xl border border-[#e6ded5] p-6">
+                  <h3 className="text-xl">{category}</h3>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="max-w-6xl mx-auto px-5 py-16 sm:px-6 md:py-24">
+          {blogPosts.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2">
+              {blogPosts.map((post) => (
+                <article
+                  key={post.slug}
+                  className="bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-sm shadow-[#af9d93]/10 sm:p-8"
+                >
+                  <p className="uppercase tracking-[0.15em] text-sm text-[#8f766b] mb-4">
+                    {formatDate(post.date)}
+                  </p>
+                  <h4 className="text-2xl mb-4 sm:text-3xl">{post.title}</h4>
+                  <p className="leading-8 text-[#5f5149] mb-8">{post.excerpt}</p>
+                  <a
+                    href={`#/blog/${post.slug}`}
+                    className="inline-flex rounded-2xl bg-[#2f2722] px-6 py-4 text-sm uppercase tracking-wide text-[#fffaf4] transition hover:bg-[#4b3f38]"
+                  >
+                    Read Post
+                  </a>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-8 text-center shadow-sm shadow-[#af9d93]/10">
+              <h3 className="text-3xl mb-4">Dollywood blog coming soon!</h3>
+              <p className="text-lg leading-8 text-[#5f5149] max-w-2xl mx-auto">
+                The first post will be about a trip to Dollywood and Cherokee, Tennessee.
+              </p>
+            </div>
+          )}
+        </section>
+      </main>
     </div>
   )
 }
@@ -468,7 +523,7 @@ function BlogPostPage({ post }) {
               <h1 className="text-xl tracking-wide uppercase sm:text-2xl">Olivia Nicole</h1>
             </a>
             <div className="flex flex-wrap gap-4 text-xs uppercase tracking-wide sm:text-sm">
-              <a href="./#blog" className="hover:opacity-70 transition">Blog</a>
+              <a href="./#/blog" className="hover:opacity-70 transition">Blog</a>
               <a href="./#contact" className="hover:opacity-70 transition">Contact</a>
               {personalBlogUrl ? (
                 <a href={personalBlogUrl} target="_blank" rel="noreferrer" className="hover:opacity-70 transition">
@@ -481,7 +536,7 @@ function BlogPostPage({ post }) {
       </nav>
 
       <main className="max-w-4xl mx-auto px-5 py-16 sm:px-6 md:py-24">
-        <a href="./#blog" className="inline-flex mb-10 text-sm uppercase tracking-wide text-[#8f766b] hover:text-[#2f2722]">
+        <a href="./#/blog" className="inline-flex mb-10 text-sm uppercase tracking-wide text-[#8f766b] hover:text-[#2f2722]">
           Back to Blog
         </a>
         <article>
@@ -500,12 +555,16 @@ function BlogPostPage({ post }) {
   )
 }
 
-function getActivePostSlug() {
+function getCurrentHash() {
   if (typeof window === 'undefined') {
-    return null
+    return ''
   }
 
-  const match = window.location.hash.match(/^#\/blog\/([^/]+)$/)
+  return window.location.hash
+}
+
+function getActivePostSlug(hash) {
+  const match = hash.match(/^#\/blog\/([^/]+)$/)
   return match ? match[1] : null
 }
 

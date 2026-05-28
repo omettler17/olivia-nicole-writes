@@ -17,14 +17,14 @@ npm run build
 
 ## Add a blog post
 
-Blog posts live in `src/blogPosts.js`.
+Blog posts live in `src/blogPosts.js`. The Blog page is available at `#/blog`.
 
-To add a post, copy the starter object inside the `blogPosts` array and change:
+To add a post, paste a new object inside the `blogPosts` array and fill in:
 
 - `slug`: lowercase URL name, such as `revision-notes`
 - `title`: the post title
 - `date`: publish date in `YYYY-MM-DD` format
-- `excerpt`: short summary shown on the Blog section
+- `excerpt`: short summary shown on the Blog page
 - `content`: one string per paragraph
 
 Example:
@@ -42,7 +42,7 @@ Example:
 }
 ```
 
-The site will automatically add the post to the Blog section and create a page at `#/blog/revision-notes`.
+The site will automatically add the post to the Blog page and create a post page at `#/blog/revision-notes`.
 
 ## Add a personal blog link
 
@@ -52,7 +52,7 @@ In `src/blogPosts.js`, set `personalBlogUrl` to your external blog URL:
 export const personalBlogUrl = 'https://your-personal-blog.com'
 ```
 
-Once that value is filled in, the website will show a separate **Personal Blog** link in the Blog area and on blog post pages.
+Once that value is filled in, the website will show a separate **Personal Blog** link on the Blog page and on blog post pages.
 
 ## Launch on GitHub Pages
 
@@ -64,4 +64,4 @@ Once that value is filled in, the website will show a separate **Personal Blog**
 6. Push to the `main` branch.
 7. Open the **Actions** tab and wait for the deploy workflow to finish.
 
-The contact form currently opens the visitor's email app using `mailto:`. Replace `hello@example.com` in `src/App.jsx` with the email address that should receive inquiries.
+The contact form submits to `olivianicolecontact@gmail.com` through FormSubmit.
