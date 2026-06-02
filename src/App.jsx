@@ -601,14 +601,36 @@ function BlogPostPage({ post }) {
           </p>
           <h2 className="text-4xl leading-tight mb-8 md:text-6xl">{post.title}</h2>
           <div className="space-y-7 text-lg leading-9 text-[#5f5149]">
-            {post.content.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+            {post.content.map((paragraph, paragraphIndex) => (
+              <p key={`${post.slug}-${paragraphIndex}`}>{renderFormattedParagraph(paragraph)}</p>
             ))}
           </div>
         </article>
       </main>
     </div>
   )
+}
+
+function renderFormattedParagraph(paragraph) {
+  if (typeof paragraph === 'string') {
+    return paragraph
+  }
+
+  return paragraph.map((run, index) => {
+    const className = [
+      run.bold ? 'font-bold' : '',
+      run.italic ? 'italic' : '',
+      run.underline ? 'underline underline-offset-4' : '',
+    ]
+      .filter(Boolean)
+      .join(' ')
+
+    return (
+      <span key={`${run.text}-${index}`} className={className || undefined}>
+        {run.text}
+      </span>
+    )
+  })
 }
 
 function getCurrentHash() {

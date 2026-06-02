@@ -25,7 +25,7 @@ To add a post, paste a new object inside the `blogPosts` array and fill in:
 - `title`: the post title
 - `date`: publish date in `YYYY-MM-DD` format
 - `excerpt`: short summary shown on the Blog page
-- `content`: one string per paragraph
+- `content`: one string per paragraph, or formatted text runs if you need italics/bold
 
 Example:
 
@@ -40,6 +40,18 @@ Example:
     'Second paragraph.',
   ],
 }
+```
+
+For inline formatting, make a paragraph an array of text runs:
+
+```js
+content: [
+  [
+    { text: 'This sentence has ' },
+    { text: 'italic text', italic: true },
+    { text: ' inside it.' },
+  ],
+]
 ```
 
 The site will automatically add the post to the Blog page and create a post page at `#/blog/revision-notes`.
