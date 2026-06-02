@@ -405,6 +405,7 @@ function BlogIndexPage() {
         links={[
           { href: './#about', label: 'About' },
           { href: './#services', label: 'Services' },
+          { href: './#/blog', label: 'Blog' },
           { href: './#contact', label: 'Contact' },
           { href: './#publications', label: 'Publications' },
           ...(personalBlogUrl
@@ -414,13 +415,13 @@ function BlogIndexPage() {
       />
 
       <main>
-        <section className="max-w-6xl mx-auto px-5 py-16 sm:px-6 md:py-24">
-          <div className="grid gap-10 md:grid-cols-[1.25fr_0.75fr] md:items-end">
+        <section className="max-w-6xl mx-auto px-5 pt-10 pb-6 sm:px-6 md:pt-14 md:pb-8">
+          <div className="grid gap-8 md:grid-cols-[1.25fr_0.75fr] md:items-end">
             <div>
               <p className="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-5">
                 Blog
               </p>
-              <h2 className="text-4xl leading-tight mb-8 md:text-6xl">
+              <h2 className="text-4xl leading-tight md:text-6xl">
                 Blogs spilling thoughts on writing, life, and of course, coffee.
               </h2>
             </div>
@@ -438,7 +439,7 @@ function BlogIndexPage() {
           </div>
         </section>
 
-        <section className="max-w-6xl mx-auto px-5 py-16 sm:px-6 md:py-24">
+        <section className="max-w-6xl mx-auto px-5 pt-4 pb-16 sm:px-6 md:pt-6 md:pb-24">
           {blogPosts.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2">
               {blogPosts.map((post) => (
@@ -492,7 +493,7 @@ function SiteHeader({ brandHref, brandLabel, links, maxWidthClass = 'max-w-6xl' 
             <p className="text-sm text-[#7c6c62]">Writer &bull; Teacher &bull; Creative Writing Coach</p>
           </div>
 
-          <div className="hidden md:flex gap-8 text-sm uppercase tracking-wide">
+          <div className="hidden md:flex gap-5 text-xs uppercase tracking-wide lg:gap-8 lg:text-sm">
             {links.map((link) => (
               <a
                 key={link.href}
@@ -578,10 +579,12 @@ function BlogPostPage({ post }) {
       <SiteHeader
         brandHref="./"
         brandLabel="Back to home"
-        maxWidthClass="max-w-4xl"
         links={[
+          { href: './#about', label: 'About' },
+          { href: './#services', label: 'Services' },
           { href: './#/blog', label: 'Blog' },
           { href: './#contact', label: 'Contact' },
+          { href: './#publications', label: 'Publications' },
           ...(personalBlogUrl
             ? [{ href: personalBlogUrl, label: 'Personal Blog', external: true }]
             : []),
