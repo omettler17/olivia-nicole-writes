@@ -423,9 +423,6 @@ function BlogIndexPage() {
               <h2 className="text-4xl leading-tight mb-8 md:text-6xl">
                 Blogs spilling thoughts on writing, life, and of course, coffee.
               </h2>
-              <p className="text-lg leading-8 text-[#5f5149] max-w-3xl">
-                This page will hold new essays and notes as they are published.
-              </p>
             </div>
 
             {personalBlogUrl ? (
