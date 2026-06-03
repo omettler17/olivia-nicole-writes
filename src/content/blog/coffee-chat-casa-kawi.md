@@ -1,5 +1,4 @@
 ---
-slug: coffee-chat-casa-kawi
 title: 'Coffee Chat: Casa KaWi'
 date: 2026-06-01
 excerpt: A coffee stop in Cherokee, North Carolina, with house-made syrups, mountain sun, and a churro worth sharing.

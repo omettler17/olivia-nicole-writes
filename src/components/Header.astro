@@ -1,0 +1,143 @@
+---
+import { NAV } from '../consts'
+
+interface Props {
+  brandHref: string
+  brandLabel: string
+  activeId?: string | null
+}
+
+const { brandHref, brandLabel, activeId = null } = Astro.props
+---
+
+<nav
+  id="site-nav"
+  data-menu-open="false"
+  class="sticky top-0 z-50 bg-[#fbf8f4]/90 backdrop-blur border-b border-[#e6ded5]"
+>
+  <div class="max-w-6xl mx-auto px-5 py-4 sm:px-6">
+    <div class="flex items-center justify-between gap-6">
+      <div>
+        <a href={brandHref} class="block hover:opacity-70 transition" aria-label={brandLabel}>
+          <h1 class="text-xl tracking-wide uppercase sm:text-2xl">Olivia Nicole</h1>
+        </a>
+        <p class="text-sm text-[#7c6c62]">Writer &bull; Teacher &bull; Creative Writing Coach</p>
+      </div>
+
+      <div class="desktop-nav hidden md:flex gap-5 text-xs uppercase tracking-wide lg:gap-8 lg:text-sm">
+        {
+          NAV.map((link) => (
+            <a
+              href={link.href}
+              data-spy={link.spy}
+              class:list={[{ 'is-active': link.id === activeId }]}
+              aria-current={link.id === activeId ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <button
+        type="button"
+        id="menu-toggle"
+        class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#c3b198] text-[#2f2722] transition hover:bg-[#f2e9dd] md:hidden"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-navigation"
+      >
+        <span class="flex w-5 flex-col gap-1.5" aria-hidden="true">
+          <span class="menu-bar menu-bar-1 h-0.5 w-full bg-current"></span>
+          <span class="menu-bar menu-bar-2 h-0.5 w-full bg-current"></span>
+          <span class="menu-bar menu-bar-3 h-0.5 w-full bg-current"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu-overlay" class="fixed inset-0 z-40 bg-[#2f2722]/35 md:hidden" aria-hidden="true"></div>
+
+  <div
+    id="mobile-navigation"
+    class="fixed right-0 top-0 z-50 h-dvh w-[min(20rem,85vw)] border-l border-[#e6ded5] bg-[#fbf8f4] px-6 py-6 shadow-2xl shadow-[#2f2722]/20 md:hidden"
+  >
+    <div class="mb-10 flex items-start justify-between gap-6">
+      <div>
+        <p class="text-xl tracking-wide uppercase">Olivia Nicole</p>
+        <p class="mt-1 text-sm text-[#7c6c62]">Menu</p>
+      </div>
+      <button
+        type="button"
+        id="menu-close"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#c3b198] text-2xl leading-none transition hover:bg-[#f2e9dd]"
+        aria-label="Close menu drawer"
+      >
+        &times;
+      </button>
+    </div>
+
+    <div class="mobile-nav flex flex-col gap-5 text-lg uppercase tracking-wide">
+      {
+        NAV.map((link) => (
+          <a
+            href={link.href}
+            data-spy={link.spy}
+            class:list={['border-b border-[#e6ded5] pb-4', { 'is-active': link.id === activeId }]}
+            aria-current={link.id === activeId ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</nav>
+
+<script>
+  const nav = document.getElementById('site-nav')
+  const toggle = document.getElementById('menu-toggle')
+  const closeBtn = document.getElementById('menu-close')
+  const overlay = document.getElementById('mobile-menu-overlay')
+  const drawer = document.getElementById('mobile-navigation')
+
+  function setMenu(open: boolean) {
+    nav?.setAttribute('data-menu-open', open ? 'true' : 'false')
+    toggle?.setAttribute('aria-expanded', open ? 'true' : 'false')
+    toggle?.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu')
+  }
+
+  toggle?.addEventListener('click', () =>
+    setMenu(nav?.getAttribute('data-menu-open') !== 'true'),
+  )
+  closeBtn?.addEventListener('click', () => setMenu(false))
+  overlay?.addEventListener('click', () => setMenu(false))
+  drawer?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)))
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setMenu(false)
+  })
+
+  // Scroll-spy: highlight the nav item for the home section currently in view.
+  const spyLinks = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('.desktop-nav a[data-spy], .mobile-nav a[data-spy]'),
+  )
+  const sections = ['about', 'services', 'contact', 'publications']
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => Boolean(el))
+
+  if (sections.length > 0 && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible.length > 0) {
+          const id = visible[0].target.id
+          spyLinks.forEach((link) => link.classList.toggle('is-active', link.dataset.spy === id))
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
+    )
+    sections.forEach((section) => observer.observe(section))
+  }
+</script>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://omettler17.github.io/olivia-nicole-writes/sitemap-index.xml

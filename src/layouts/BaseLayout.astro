@@ -1,0 +1,63 @@
+---
+import Header from '../components/Header.astro'
+import {
+  SITE_NAME,
+  SITE_DESCRIPTION,
+  GOOGLE_SITE_VERIFICATION,
+  withBase,
+} from '../consts'
+import '../styles/global.css'
+
+interface Props {
+  title: string
+  description?: string
+  ogType?: string
+  image?: string
+  activeId?: string | null
+  brandHref?: string
+  brandLabel?: string
+}
+
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  ogType = 'website',
+  image,
+  activeId = null,
+  brandHref = withBase(''),
+  brandLabel = 'Back to home',
+} = Astro.props
+
+// Normalize to a trailing slash so canonical/og:url are consistent across pages.
+const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`
+const canonicalURL = new URL(pathname, Astro.site)
+const imageURL = new URL(image ?? withBase('images/olivia-headshot.png'), Astro.site)
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" href={withBase('sitemap-index.xml')} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={imageURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
+  </head>
+  <body id="top" class="min-h-screen bg-[#fbf8f4] text-[#2f2722] font-serif">
+    <Header brandHref={brandHref} brandLabel={brandLabel} activeId={activeId} />
+    <slot />
+  </body>
+</html>
