@@ -574,6 +574,11 @@ function SiteHeader({ brandHref, brandLabel, links, maxWidthClass = 'max-w-6xl' 
 }
 
 function BlogPostPage({ post }) {
+  const recentPosts = blogPosts
+    .filter((other) => other.slug !== post.slug)
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, 3)
+
   return (
     <div id="top" className="min-h-screen bg-[#fbf8f4] text-[#2f2722] font-serif">
       <SiteHeader
@@ -606,6 +611,31 @@ function BlogPostPage({ post }) {
             ))}
           </div>
         </article>
+
+        {recentPosts.length > 0 ? (
+          <section className="mt-20 border-t border-[#e6ded5] pt-12">
+            <p className="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-8">
+              Keep Reading
+            </p>
+            <div className="grid gap-6 md:grid-cols-3">
+              {recentPosts.map((recent) => (
+                <a
+                  key={recent.slug}
+                  href={`./#/blog/${recent.slug}`}
+                  className="group block bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-sm shadow-[#af9d93]/10 transition hover:border-[#c3b198] hover:shadow-md"
+                >
+                  <p className="uppercase tracking-[0.15em] text-xs text-[#8f766b] mb-3">
+                    {formatDate(recent.date)}
+                  </p>
+                  <h4 className="text-xl leading-snug mb-3 group-hover:text-[#8f766b] transition">
+                    {recent.title}
+                  </h4>
+                  <p className="text-sm leading-7 text-[#5f5149]">{recent.excerpt}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        ) : null}
       </main>
     </div>
   )
