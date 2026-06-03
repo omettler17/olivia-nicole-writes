@@ -520,22 +520,20 @@ function BlogIndexPage() {
           {blogPosts.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2">
               {blogPosts.map((post) => (
-                <article
+                <a
                   key={post.slug}
-                  className="bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-sm shadow-[#af9d93]/10 sm:p-8"
+                  href={`#/blog/${post.slug}`}
+                  className="group block bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-sm shadow-[#af9d93]/10 transition hover:border-[#c3b198] hover:shadow-md sm:p-8"
                 >
                   <p className="uppercase tracking-[0.15em] text-sm text-[#8f766b] mb-4">
                     {formatDate(post.date)}
                   </p>
-                  <h4 className="text-2xl mb-4 sm:text-3xl">{post.title}</h4>
+                  <h4 className="text-2xl mb-4 transition group-hover:text-[#8f766b] sm:text-3xl">{post.title}</h4>
                   <p className="leading-8 text-[#5f5149] mb-8">{post.excerpt}</p>
-                  <a
-                    href={`#/blog/${post.slug}`}
-                    className="inline-flex rounded-2xl bg-[#2f2722] px-6 py-4 text-sm uppercase tracking-wide text-[#fffaf4] transition hover:bg-[#4b3f38]"
-                  >
+                  <span className="inline-flex rounded-2xl bg-[#2f2722] px-6 py-4 text-sm uppercase tracking-wide text-[#fffaf4] transition group-hover:bg-[#4b3f38]">
                     Read Post
-                  </a>
-                </article>
+                  </span>
+                </a>
               ))}
             </div>
           ) : (
