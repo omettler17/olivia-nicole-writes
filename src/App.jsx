@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { blogPosts, personalBlogUrl } from './blogPosts'
@@ -36,10 +36,25 @@ const SITE_NAME = 'Olivia Nicole'
 
 export default function OliviaNicoleWebsite() {
   const [currentHash, setCurrentHash] = useState(() => getCurrentHash())
+  // A home-page anchor ('top' or a section id) waiting to be scrolled to after
+  // the page renders. Seeded from the initial hash so deep links still work.
+  const pendingAnchorRef = useRef(getInitialHomeAnchor())
 
   useEffect(() => {
+    // Let the browser restore the previous scroll position on reload.
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'auto'
+    }
+
     function handleHashChange() {
-      setCurrentHash(getCurrentHash())
+      const hash = getCurrentHash()
+      const id = hash.replace(/^#/, '')
+      // Home anchors (a section, 'top', or empty "back to home") should scroll;
+      // anything else (e.g. #/blog/...) is a route handled by rendering.
+      if (id === '' || id === 'top' || HOME_SECTION_IDS.includes(id)) {
+        pendingAnchorRef.current = id === '' ? 'top' : id
+      }
+      setCurrentHash(hash)
     }
 
     window.addEventListener('hashchange', handleHashChange)
@@ -76,20 +91,26 @@ export default function OliviaNicoleWebsite() {
     }
   }, [showBlogPost, showBlogIndex, activePost])
 
-  // When arriving on the home page from another view (e.g. clicking "About"
-  // from a blog page), the target section doesn't exist yet when the hash
-  // changes, so the browser's native anchor scroll is a no-op. Re-run it here.
-  // useLayoutEffect runs before paint, so there's no visible jump/flash.
+  // After the home page renders, scroll to any pending anchor (from a nav click
+  // or a deep link), then strip the hash from the URL. Keeping the URL clean
+  // ("/") means a refresh restores the user's last scroll position instead of
+  // jumping back to whichever section link was clicked last. useLayoutEffect
+  // runs before paint, so there's no visible jump.
   useLayoutEffect(() => {
     if (!isHome) return
-    const targetId = currentHash.replace(/^#/, '')
-    if (!targetId || targetId === 'top') {
+    const anchor = pendingAnchorRef.current
+    if (anchor === null) return
+    pendingAnchorRef.current = null
+
+    if (anchor === 'top') {
       window.scrollTo(0, 0)
-      return
+    } else {
+      document.getElementById(anchor)?.scrollIntoView()
     }
-    const target = document.getElementById(targetId)
-    if (target) {
-      target.scrollIntoView()
+
+    if (getCurrentHash()) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+      setCurrentHash('')
     }
   }, [currentHash, isHome])
 
@@ -776,6 +797,13 @@ function getCurrentHash() {
   }
 
   return window.location.hash
+}
+
+// Only a section deep link (e.g. /#about) should auto-scroll on first load; an
+// empty or non-section hash lets the browser restore the prior scroll position.
+function getInitialHomeAnchor() {
+  const id = getCurrentHash().replace(/^#/, '')
+  return HOME_SECTION_IDS.includes(id) ? id : null
 }
 
 function getActivePostSlug(hash) {
