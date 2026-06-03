@@ -17,44 +17,36 @@ npm run build
 
 ## Add a blog post
 
-Blog posts live in `src/blogPosts.js`. The Blog page is available at `#/blog`.
+Each post is its own Markdown file in `src/posts/`. To publish, create a new
+file named after the post slug (for example `src/posts/revision-notes.md`) with
+a frontmatter block followed by the post body:
 
-To add a post, paste a new object inside the `blogPosts` array and fill in:
+```markdown
+---
+slug: revision-notes
+title: Revision Notes
+date: 2026-06-01
+excerpt: A short summary shown on the Blog page.
+---
 
-- `slug`: lowercase URL name, such as `revision-notes`
-- `title`: the post title
-- `date`: publish date in `YYYY-MM-DD` format
-- `excerpt`: short summary shown on the Blog page
-- `content`: one string per paragraph, or formatted text runs if you need italics/bold
+First paragraph. Write naturally — use *italics* and **bold** as needed.
 
-Example:
-
-```js
-{
-  slug: 'revision-notes',
-  title: 'Revision Notes',
-  date: '2026-06-01',
-  excerpt: 'A short summary of the post.',
-  content: [
-    'First paragraph.',
-    'Second paragraph.',
-  ],
-}
+Second paragraph. [Links](https://example.com), lists, and headings work too.
 ```
 
-For inline formatting, make a paragraph an array of text runs:
+Frontmatter fields:
 
-```js
-content: [
-  [
-    { text: 'This sentence has ' },
-    { text: 'italic text', italic: true },
-    { text: ' inside it.' },
-  ],
-]
-```
+- `slug`: lowercase URL name (matches the filename). The post page is created at `#/blog/revision-notes`.
+- `title`: the post title. Wrap it in quotes if it contains a colon, e.g. `'Coffee Chat: Casa KaWi'`.
+- `date`: publish date in `YYYY-MM-DD` format. Posts are sorted newest-first automatically.
+- `excerpt`: one-line summary shown on the Blog page and in the "Keep Reading" cards.
 
-The site will automatically add the post to the Blog page and create a post page at `#/blog/revision-notes`.
+That's it — the site picks up the new file automatically (no other files to edit),
+adds it to the Blog page, sorts it by date, and links it from other posts under
+"Keep Reading."
+
+See [`AGENTS.md`](AGENTS.md) for a fuller walkthrough, including the Markdown
+formatting that's supported.
 
 ## Add a personal blog link
 

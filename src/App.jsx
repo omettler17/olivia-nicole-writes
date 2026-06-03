@@ -1,5 +1,38 @@
 import { useEffect, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { blogPosts, personalBlogUrl } from './blogPosts'
+
+// Tailwind-styled element overrides for rendered post Markdown.
+const markdownComponents = {
+  p: ({ node, ...props }) => <p className="text-lg leading-9 text-[#5f5149]" {...props} />,
+  a: ({ node, ...props }) => (
+    <a
+      target="_blank"
+      rel="noreferrer"
+      className="italic underline decoration-[#c3b198] underline-offset-4 transition hover:text-[#8f766b] hover:decoration-[#af9d93]"
+      {...props}
+    />
+  ),
+  h2: ({ node, ...props }) => <h3 className="text-3xl leading-snug mt-12 mb-2" {...props} />,
+  h3: ({ node, ...props }) => <h4 className="text-2xl leading-snug mt-10 mb-2" {...props} />,
+  ul: ({ node, ...props }) => (
+    <ul className="list-disc pl-6 space-y-2 text-lg leading-9 text-[#5f5149]" {...props} />
+  ),
+  ol: ({ node, ...props }) => (
+    <ol className="list-decimal pl-6 space-y-2 text-lg leading-9 text-[#5f5149]" {...props} />
+  ),
+  blockquote: ({ node, ...props }) => (
+    <blockquote
+      className="border-l-2 border-[#c3b198] pl-5 italic text-[#6b5d54]"
+      {...props}
+    />
+  ),
+}
+
+// Home-page sections that the nav highlights as you scroll past them.
+const HOME_SECTION_IDS = ['about', 'services', 'contact', 'publications']
+const SITE_NAME = 'Olivia Nicole'
 
 export default function OliviaNicoleWebsite() {
   const [currentHash, setCurrentHash] = useState(() => getCurrentHash())
@@ -17,6 +50,31 @@ export default function OliviaNicoleWebsite() {
   const activePost = blogPosts.find((post) => post.slug === activePostSlug)
   const showBlogIndex = currentHash === '#/blog'
   const showBlogPost = Boolean(activePost)
+
+  // Reset scroll when moving between blog views (e.g. via "Keep Reading"), but
+  // leave the home page's in-page anchor links (#about, #services) alone.
+  const blogViewKey = showBlogPost ? `post:${activePostSlug}` : showBlogIndex ? 'index' : null
+  useEffect(() => {
+    if (blogViewKey) {
+      window.scrollTo(0, 0)
+    }
+  }, [blogViewKey])
+
+  // Highlight the nav item for the home-page section currently in view.
+  const isHome = !showBlogPost && !showBlogIndex
+  const activeSection = useScrollSpy(HOME_SECTION_IDS, isHome)
+  const homeActiveHref = activeSection ? `#${activeSection}` : ''
+
+  // Set the browser tab title per page (helps bookmarks, tabs, and shares).
+  useEffect(() => {
+    if (showBlogPost && activePost) {
+      document.title = `${activePost.title} | ${SITE_NAME}`
+    } else if (showBlogIndex) {
+      document.title = `Blog | ${SITE_NAME}`
+    } else {
+      document.title = `${SITE_NAME} | Writer, Teacher, Creative Writing Coach`
+    }
+  }, [showBlogPost, showBlogIndex, activePost])
 
   const publications = [
     {
@@ -74,6 +132,7 @@ export default function OliviaNicoleWebsite() {
       <SiteHeader
         brandHref="#top"
         brandLabel="Back to top"
+        activeHref={homeActiveHref}
         links={[
           { href: '#about', label: 'About' },
           { href: '#services', label: 'Services' },
@@ -402,6 +461,7 @@ function BlogIndexPage() {
       <SiteHeader
         brandHref="./"
         brandLabel="Back to home"
+        activeHref="./#/blog"
         links={[
           { href: './#about', label: 'About' },
           { href: './#services', label: 'Services' },
@@ -475,7 +535,7 @@ function BlogIndexPage() {
   )
 }
 
-function SiteHeader({ brandHref, brandLabel, links, maxWidthClass = 'max-w-6xl' }) {
+function SiteHeader({ brandHref, brandLabel, links, activeHref = '', maxWidthClass = 'max-w-6xl' }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   function closeMenu() {
@@ -494,17 +554,25 @@ function SiteHeader({ brandHref, brandLabel, links, maxWidthClass = 'max-w-6xl' 
           </div>
 
           <div className="hidden md:flex gap-5 text-xs uppercase tracking-wide lg:gap-8 lg:text-sm">
-            {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target={link.external ? '_blank' : undefined}
-                rel={link.external ? 'noreferrer' : undefined}
-                className="hover:opacity-70 transition"
-              >
-                {link.label}
-              </a>
-            ))}
+            {links.map((link) => {
+              const isActive = Boolean(activeHref) && link.href === activeHref
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noreferrer' : undefined}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={
+                    isActive
+                      ? 'font-semibold text-[#2f2722] underline decoration-[#c3b198] decoration-2 underline-offset-8 transition'
+                      : 'hover:opacity-70 transition'
+                  }
+                >
+                  {link.label}
+                </a>
+              )
+            })}
           </div>
 
           <button
@@ -555,18 +623,24 @@ function SiteHeader({ brandHref, brandLabel, links, maxWidthClass = 'max-w-6xl' 
         </div>
 
         <div className="flex flex-col gap-5 text-lg uppercase tracking-wide">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              target={link.external ? '_blank' : undefined}
-              rel={link.external ? 'noreferrer' : undefined}
-              className="border-b border-[#e6ded5] pb-4 transition hover:text-[#8f766b]"
-              onClick={closeMenu}
-            >
-              {link.label}
-            </a>
-          ))}
+          {links.map((link) => {
+            const isActive = Boolean(activeHref) && link.href === activeHref
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noreferrer' : undefined}
+                aria-current={isActive ? 'page' : undefined}
+                className={`border-b border-[#e6ded5] pb-4 transition hover:text-[#8f766b] ${
+                  isActive ? 'font-semibold text-[#8f766b]' : ''
+                }`}
+                onClick={closeMenu}
+              >
+                {link.label}
+              </a>
+            )
+          })}
         </div>
       </div>
     </nav>
@@ -584,6 +658,7 @@ function BlogPostPage({ post }) {
       <SiteHeader
         brandHref="./"
         brandLabel="Back to home"
+        activeHref="./#/blog"
         links={[
           { href: './#about', label: 'About' },
           { href: './#services', label: 'Services' },
@@ -597,18 +672,21 @@ function BlogPostPage({ post }) {
       />
 
       <main className="max-w-4xl mx-auto px-5 py-16 sm:px-6 md:py-24">
-        <a href="./#/blog" className="inline-flex mb-10 text-sm uppercase tracking-wide text-[#8f766b] hover:text-[#2f2722]">
-          Back to Blog
+        <a
+          href="./#/blog"
+          className="inline-flex items-center gap-2 mb-10 text-sm uppercase tracking-wide text-[#8f766b] transition hover:text-[#2f2722]"
+        >
+          <span aria-hidden="true">&larr;</span> Back to Blog
         </a>
         <article>
           <p className="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-5">
             {formatDate(post.date)}
           </p>
           <h2 className="text-4xl leading-tight mb-8 md:text-6xl">{post.title}</h2>
-          <div className="space-y-7 text-lg leading-9 text-[#5f5149]">
-            {post.content.map((paragraph, paragraphIndex) => (
-              <p key={`${post.slug}-${paragraphIndex}`}>{renderFormattedParagraph(paragraph)}</p>
-            ))}
+          <div className="space-y-7">
+            <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+              {post.body}
+            </ReactMarkdown>
           </div>
         </article>
 
@@ -641,26 +719,40 @@ function BlogPostPage({ post }) {
   )
 }
 
-function renderFormattedParagraph(paragraph) {
-  if (typeof paragraph === 'string') {
-    return paragraph
-  }
+// Tracks which of the given section ids is currently in view (scroll-spy).
+// Returns '' when disabled or nothing matches.
+function useScrollSpy(ids, enabled) {
+  const [activeId, setActiveId] = useState('')
 
-  return paragraph.map((run, index) => {
-    const className = [
-      run.bold ? 'font-bold' : '',
-      run.italic ? 'italic' : '',
-      run.underline ? 'underline underline-offset-4' : '',
-    ]
-      .filter(Boolean)
-      .join(' ')
+  useEffect(() => {
+    if (!enabled || typeof IntersectionObserver === 'undefined') {
+      setActiveId('')
+      return
+    }
 
-    return (
-      <span key={`${run.text}-${index}`} className={className || undefined}>
-        {run.text}
-      </span>
+    const elements = ids.map((id) => document.getElementById(id)).filter(Boolean)
+    if (elements.length === 0) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible.length > 0) {
+          setActiveId(visible[0].target.id)
+        }
+      },
+      // Activate a section roughly when it reaches the vertical middle of the viewport.
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
     )
-  })
+
+    elements.forEach((element) => observer.observe(element))
+    return () => observer.disconnect()
+  }, [ids, enabled])
+
+  return activeId
 }
 
 function getCurrentHash() {
