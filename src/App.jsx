@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { blogPosts, personalBlogUrl } from './blogPosts'
@@ -75,6 +75,23 @@ export default function OliviaNicoleWebsite() {
       document.title = `${SITE_NAME} | Writer, Teacher, Creative Writing Coach`
     }
   }, [showBlogPost, showBlogIndex, activePost])
+
+  // When arriving on the home page from another view (e.g. clicking "About"
+  // from a blog page), the target section doesn't exist yet when the hash
+  // changes, so the browser's native anchor scroll is a no-op. Re-run it here.
+  // useLayoutEffect runs before paint, so there's no visible jump/flash.
+  useLayoutEffect(() => {
+    if (!isHome) return
+    const targetId = currentHash.replace(/^#/, '')
+    if (!targetId || targetId === 'top') {
+      window.scrollTo(0, 0)
+      return
+    }
+    const target = document.getElementById(targetId)
+    if (target) {
+      target.scrollIntoView()
+    }
+  }, [currentHash, isHome])
 
   const publications = [
     {
