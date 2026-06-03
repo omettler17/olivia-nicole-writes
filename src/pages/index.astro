@@ -1,0 +1,309 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Footer from '../components/Footer.astro'
+import { SITE_TITLE, PUBLICATIONS, HOME_SECTION_IDS, withBase } from '../consts'
+
+const headshot = withBase('images/olivia-headshot.png')
+---
+
+<BaseLayout title={SITE_TITLE} brandHref={withBase('#top')} brandLabel="Back to top">
+  <section class="max-w-6xl mx-auto px-5 py-14 grid gap-10 sm:px-6 md:grid-cols-2 md:gap-16 md:py-24 md:items-center">
+    <div>
+      <p class="uppercase tracking-[0.25em] text-sm text-[#8f766b] mb-6">
+        Literary Coaching & Editorial Support
+      </p>
+
+      <h2 class="text-4xl leading-tight mb-8 sm:text-5xl md:text-6xl">
+        Supporting emerging writers with crafting stronger manuscripts and creative practices.
+      </h2>
+
+      <p class="text-lg leading-8 text-[#5f5149] mb-10 max-w-xl">
+        I'm Olivia Nicole, a writer, teacher, and creative writing coach. I work with poets and emerging writers to create supportive, craft-focused spaces that meet them where they're at while helping them reach where they want to be.
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <a
+          href={withBase('#services')}
+          class="bg-[#af9d93] text-[#fffaf4] px-8 py-4 rounded-2xl text-sm uppercase tracking-wide hover:bg-[#9f8b80] transition"
+        >
+          Work With Me
+        </a>
+
+        <a
+          href={withBase('#contact')}
+          class="border border-[#af9d93] px-8 py-4 rounded-2xl text-sm uppercase tracking-wide hover:bg-[#f2e9dd] transition"
+        >
+          Contact
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="aspect-[4/5] overflow-hidden rounded-[2rem] bg-[#dfc9b9] shadow-xl shadow-[#af9d93]/20 border border-[#c3b198]">
+        <img src={headshot} alt="Portrait of Olivia Nicole" class="h-full w-full object-cover object-center" />
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-[#e6ded5] bg-[#f6f0ea]">
+    <div class="max-w-5xl mx-auto px-5 py-16 text-center sm:px-6 md:py-20">
+      <p class="uppercase tracking-[0.2em] text-sm text-[#755f54] mb-6">Who I Help</p>
+
+      <h3 class="text-3xl leading-tight mb-8 md:text-4xl">
+        Writers looking for guidance, accountability, and thoughtful feedback outside traditional writing spaces.
+      </h3>
+
+      <div class="grid md:grid-cols-3 gap-8 mt-14 text-left">
+        <div class="bg-[#fffdf9] p-8 rounded-3xl shadow-sm border-t-4 border-[#dfc9b9]">
+          <h4 class="text-xl mb-4">Emerging Poets</h4>
+          <p class="leading-7 text-[#5f5149]">
+            Writers developing their voice and preparing work for publication, workshops, or chapbook submissions.
+          </p>
+        </div>
+
+        <div class="bg-[#fffdf9] p-8 rounded-3xl shadow-sm border-t-4 border-[#c3b198]">
+          <h4 class="text-xl mb-4">First-Book Writers</h4>
+          <p class="leading-7 text-[#5f5149]">
+            Writers navigating structure, revision, momentum, and the emotional realities of longer creative projects.
+          </p>
+        </div>
+
+        <div class="bg-[#fffdf9] p-8 rounded-3xl shadow-sm border-t-4 border-[#af9d93]">
+          <h4 class="text-xl mb-4">Writers Rebuilding Practice</h4>
+          <p class="leading-7 text-[#5f5149]">
+            People balancing work, life, and creativity who need support maintaining sustainable writing habits.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="max-w-5xl mx-auto px-5 py-16 sm:px-6 md:py-24">
+    <div class="mb-12">
+      <p class="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-4">About</p>
+
+      <h3 class="text-4xl mb-8 md:text-5xl">Writing is hard work. Support helps.</h3>
+    </div>
+
+    <div class="space-y-7 text-base leading-8 text-[#5f5149] md:text-lg md:leading-9">
+      <p>
+        I'll be the first person to admit that writing is hard, and that's because writing isn't just writing. It's revising, planning, reading, building community, and finding the courage to put your work out into the world.
+      </p>
+
+      <p>
+        There are many ways to find support, and I'd encourage you to explore what works for you. But I also know that access to a writing community isn't guaranteed, even with the far reach of the internet. That's why I do this work: to build bridges where they're missing or have fallen apart, because creatives live everywhere and deserve support no matter their location or situation.
+      </p>
+
+      <p>
+        I'm a published poet and a middle school teacher, which means I spend a lot of time thinking about how people learn, grow, and get stuck. I also know how the right kind of support can make all the difference. I believe that people don't stop needing teachers simply because they've left school. Writing is a skill that takes time, patience, and care to refine at every stage.
+      </p>
+
+      <p>
+        My approach to coaching is rooted in connection first. Whether you're looking for a single round of editorial feedback on a piece, or ongoing 1:1 support around craft, process, and accountability, I want you to feel met where you are, not measured against where you think you should be.
+      </p>
+    </div>
+  </section>
+
+  <section id="services" class="bg-[#af9d93] text-[#fffaf4] py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-5 sm:px-6">
+      <div class="mb-12 md:mb-16">
+        <p class="uppercase tracking-[0.2em] text-sm text-[#fbf8f4] mb-4">Services</p>
+
+        <h3 class="text-4xl mb-6 md:text-5xl">Coaching & Editorial Support</h3>
+
+        <p class="text-lg text-[#fffaf4] max-w-3xl leading-8">
+          Thoughtful, personalized support for writers at different stages of their creative process.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8 items-stretch">
+        <div class="bg-[#fffaf4] text-[#2f2722] p-6 rounded-2xl shadow-xl shadow-[#6d5d54]/15 border border-[#fffdf9] h-full flex flex-col sm:p-8 sm:rounded-3xl lg:min-h-[37rem]">
+          <p class="uppercase tracking-[0.15em] text-sm text-[#755f54] mb-4">Best For Most Clients</p>
+
+          <h4 class="text-2xl mb-6 sm:text-3xl">Starter Package</h4>
+
+          <p class="leading-8 mb-6 text-[#5f5149]">
+            Four coaching sessions over eight weeks for writers seeking sustained support and momentum.
+          </p>
+
+          <ul class="space-y-3 mb-8 leading-7 text-[#5f5149] flex-1">
+            <li>4 x 60-minute sessions used within 8 weeks</li>
+            <li>Email support between sessions</li>
+            <li>Brief written notes after each call</li>
+          </ul>
+
+          <p class="text-3xl mb-8">$285</p>
+
+          <a href={withBase('#contact')} class="block text-center w-full bg-[#2f2722] text-[#fffaf4] py-4 rounded-2xl uppercase tracking-wide text-sm hover:bg-[#4b3f38] transition">
+            Book Package
+          </a>
+        </div>
+
+        <div class="bg-[#eee3d8] text-[#2f2722] p-6 rounded-2xl border border-[#f5ece5] shadow-xl shadow-[#6d5d54]/10 h-full flex flex-col sm:p-8 sm:rounded-3xl lg:min-h-[37rem]">
+          <p class="uppercase tracking-[0.15em] text-sm text-[#755f54] mb-4">1:1 Coaching</p>
+
+          <h4 class="text-2xl mb-6 sm:text-3xl">Single Coaching Session</h4>
+
+          <p class="text-[#5f5149] leading-8 mb-6">
+            A 60-minute, pay-as-you-go session for writers who want to try coaching before committing to a package.
+          </p>
+
+          <ul class="space-y-3 text-[#5f5149] mb-8 leading-7 flex-1">
+            <li>Client submits work in advance</li>
+            <li>Poems, pages, or a prompt welcome</li>
+            <li>Focused discussion on craft, direction, and feedback</li>
+          </ul>
+
+          <p class="text-3xl mb-8">$85</p>
+
+          <a href={withBase('#contact')} class="block text-center w-full bg-[#2f2722] text-[#fffaf4] py-4 rounded-2xl uppercase tracking-wide text-sm hover:bg-[#4b3f38] transition">
+            Book Session
+          </a>
+        </div>
+
+        <div class="bg-[#e0d0c4] text-[#2f2722] p-6 rounded-2xl border border-[#eaded5] shadow-xl shadow-[#6d5d54]/10 h-full flex flex-col sm:p-8 sm:rounded-3xl lg:min-h-[37rem]">
+          <p class="uppercase tracking-[0.15em] text-sm text-[#8f766b] mb-4">Poetry-Specific</p>
+
+          <h4 class="text-2xl mb-6 sm:text-3xl">Poem Critique</h4>
+
+          <p class="text-[#5f5149] leading-8 mb-6">
+            Flat-rate critique for poems and chapbook manuscripts, designed for work that needs close, thoughtful attention beyond per-word pricing.
+          </p>
+
+          <ul class="space-y-3 text-[#5f5149] mb-8 leading-7 flex-1">
+            <li>1 poem: $35</li>
+            <li>3 poems: $90</li>
+            <li>Chapbook manuscript, 20-30 pages: $250-$350</li>
+            <li>Written craft notes in the document</li>
+            <li>1-page letter on overall strengths and suggested revisions</li>
+          </ul>
+
+          <p class="text-3xl mb-8">From $35</p>
+
+          <a href={withBase('#contact')} class="block text-center w-full bg-[#2f2722] text-[#fffaf4] py-4 rounded-2xl uppercase tracking-wide text-sm hover:bg-[#4b3f38] transition">
+            Request Critique
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="bg-[#f6f0ea] py-16 border-t border-[#e6ded5] md:py-24">
+    <div class="max-w-4xl mx-auto px-5 text-center sm:px-6">
+      <p class="uppercase tracking-[0.2em] text-sm text-[#755f54] mb-4">Contact</p>
+
+      <h3 class="text-4xl mb-8 md:text-5xl">Let's work together.</h3>
+
+      <p class="text-lg leading-8 text-[#5f5149] mb-12 max-w-2xl mx-auto">
+        Whether you're looking for coaching, editorial support, or guidance reconnecting with your writing practice, I'd love to hear from you.
+      </p>
+
+      <div class="bg-[#fffdf9] rounded-2xl p-6 shadow-lg shadow-[#af9d93]/20 max-w-2xl mx-auto text-left border border-[#d3cac0] sm:p-10 sm:rounded-[2rem]">
+        <form class="space-y-6" action="https://formsubmit.co/olivianicolecontact@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New writing inquiry from Olivia Nicole Writes" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <div>
+            <label class="block mb-2 text-sm uppercase tracking-wide" for="name">Name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              class="w-full border border-[#c3b198] rounded-xl px-4 py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-[#af9d93]"
+              placeholder="Your name"
+            />
+          </div>
+
+          <div>
+            <label class="block mb-2 text-sm uppercase tracking-wide" for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              class="w-full border border-[#c3b198] rounded-xl px-4 py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-[#af9d93]"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div>
+            <label class="block mb-2 text-sm uppercase tracking-wide" for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              required
+              class="w-full border border-[#c3b198] rounded-xl px-4 py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-[#af9d93]"
+              placeholder="Tell me a bit about your project or what kind of support you're looking for."></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-[#af9d93] text-[#fffaf4] py-4 rounded-2xl uppercase tracking-wide text-sm hover:bg-[#9f8b80] transition"
+          >
+            Send Inquiry
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="publications" class="max-w-5xl mx-auto px-5 py-16 sm:px-6 md:py-24">
+    <div class="mb-12 md:mb-16">
+      <p class="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-4">Publications</p>
+
+      <h3 class="text-4xl mb-6 md:text-5xl">Selected Work</h3>
+    </div>
+
+    <div class="space-y-6 text-base md:text-lg">
+      {
+        PUBLICATIONS.map(({ title, publication, url }) => (
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between border-b border-[#e6ded5] pb-6">
+            <a
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              class="text-lg italic underline decoration-[#c3b198] underline-offset-4 transition hover:text-[#8f766b] hover:decoration-[#af9d93] md:text-xl"
+            >
+              "{title}"
+            </a>
+            <p class="uppercase tracking-[0.15em] text-sm text-[#8f766b] mt-2 md:mt-0">{publication}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<script define:vars={{ SECTIONS: HOME_SECTION_IDS }}>
+  // Scroll to a home section when its hash appears (nav click or deep link),
+  // then strip the hash so a refresh restores the prior scroll position rather
+  // than re-jumping to the last clicked heading.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'auto'
+
+  function scrollToAnchor(id) {
+    if (id === 'top' || id === '') window.scrollTo(0, 0)
+    else document.getElementById(id)?.scrollIntoView()
+  }
+
+  function stripHash() {
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search)
+  }
+
+  const initial = location.hash.replace(/^#/, '')
+  if (SECTIONS.includes(initial)) {
+    scrollToAnchor(initial)
+    stripHash()
+  }
+
+  window.addEventListener('hashchange', () => {
+    const id = location.hash.replace(/^#/, '')
+    if (id === '' || id === 'top' || SECTIONS.includes(id)) {
+      scrollToAnchor(id === '' ? 'top' : id)
+      stripHash()
+    }
+  })
+</script>

@@ -1,5 +1,4 @@
 ---
-slug: coffee-chat-bellwood-grant-park
 title: 'Coffee Chat: Bellwood (Grant Park)'
 date: 2026-06-03
 excerpt: An antique, muted coffee shop in Grant Park with thick glass cups, a brown-butter caramel latte, and a strip worth braving Boulevard for.

@@ -1,5 +1,4 @@
 ---
-slug: dollywood-dalliance
 title: A Dollywood Dalliance
 date: 2026-06-02
 excerpt: One YouTube video, a $3 trolley, a too-long train whistle, and the Lightning Rod — a first (and maybe last) trip to Dollywood.

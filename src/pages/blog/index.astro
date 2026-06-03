@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { SITE_NAME, PERSONAL_BLOG_URL, formatDate, withBase } from '../../consts'
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+)
+---
+
+<BaseLayout title={`Blog | ${SITE_NAME}`} activeId="blog">
+  <main>
+    <section class="max-w-6xl mx-auto px-5 pt-10 pb-6 sm:px-6 md:pt-14 md:pb-8">
+      <div class="grid gap-8 md:grid-cols-[1.25fr_0.75fr] md:items-end">
+        <div>
+          <p class="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-5">Blog</p>
+          <h2 class="text-4xl leading-tight md:text-6xl">
+            Blogs spilling thoughts on writing, life, and of course, coffee.
+          </h2>
+        </div>
+
+        {
+          PERSONAL_BLOG_URL ? (
+            <a
+              href={PERSONAL_BLOG_URL}
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex justify-center rounded-2xl border border-[#af9d93] px-6 py-4 text-sm uppercase tracking-wide text-[#2f2722] transition hover:bg-[#f2e9dd]"
+            >
+              Personal Blog
+            </a>
+          ) : null
+        }
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-5 pt-4 pb-16 sm:px-6 md:pt-6 md:pb-24">
+      {
+        posts.length > 0 ? (
+          <div class="grid gap-6 md:grid-cols-2">
+            {posts.map((post) => (
+              <a
+                href={withBase(`blog/${post.slug}/`)}
+                class="group block bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-sm shadow-[#af9d93]/10 transition hover:border-[#c3b198] hover:shadow-md sm:p-8"
+              >
+                <p class="uppercase tracking-[0.15em] text-sm text-[#8f766b] mb-4">
+                  {formatDate(post.data.date)}
+                </p>
+                <h4 class="text-2xl mb-4 transition group-hover:text-[#8f766b] sm:text-3xl">
+                  {post.data.title}
+                </h4>
+                <p class="leading-8 text-[#5f5149] mb-8">{post.data.excerpt}</p>
+                <span class="inline-flex rounded-2xl bg-[#2f2722] px-6 py-4 text-sm uppercase tracking-wide text-[#fffaf4] transition group-hover:bg-[#4b3f38]">
+                  Read Post
+                </span>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-8 text-center shadow-sm shadow-[#af9d93]/10">
+            <h3 class="text-3xl mb-4">Dollywood blog coming soon!</h3>
+            <p class="text-lg leading-8 text-[#5f5149] max-w-2xl mx-auto">
+              The first post will be about a trip to Dollywood and Cherokee, Tennessee.
+            </p>
+          </div>
+        )
+      }
+    </section>
+  </main>
+</BaseLayout>

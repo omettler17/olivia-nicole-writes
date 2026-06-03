@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { SITE_NAME, formatDate, withBase } from '../../consts'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog')
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }))
+}
+
+const { post } = Astro.props
+const { Content } = await post.render()
+
+const recent = (await getCollection('blog'))
+  .filter((entry) => entry.slug !== post.slug)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3)
+---
+
+<BaseLayout
+  title={`${post.data.title} | ${SITE_NAME}`}
+  description={post.data.excerpt}
+  ogType="article"
+  activeId="blog"
+>
+  <main class="max-w-4xl mx-auto px-5 py-16 sm:px-6 md:py-24">
+    <a
+      href={withBase('blog/')}
+      class="inline-flex items-center gap-2 mb-10 text-sm uppercase tracking-wide text-[#8f766b] transition hover:text-[#2f2722]"
+    >
+      <span aria-hidden="true">&larr;</span> Back to Blog
+    </a>
+
+    <article>
+      <p class="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-5">{formatDate(post.data.date)}</p>
+      <h2 class="text-4xl leading-tight mb-8 md:text-6xl">{post.data.title}</h2>
+      <div class="post-body">
+        <Content />
+      </div>
+    </article>
+
+    {
+      recent.length > 0 && (
+        <section class="mt-20 border-t border-[#e6ded5] pt-12">
+          <p class="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-8">Keep Reading</p>
+          <div class="grid gap-6 md:grid-cols-3">
+            {recent.map((entry) => (
+              <a
+                href={withBase(`blog/${entry.slug}/`)}
+                class="group block bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-sm shadow-[#af9d93]/10 transition hover:border-[#c3b198] hover:shadow-md"
+              >
+                <p class="uppercase tracking-[0.15em] text-xs text-[#8f766b] mb-3">
+                  {formatDate(entry.data.date)}
+                </p>
+                <h4 class="text-xl leading-snug mb-3 group-hover:text-[#8f766b] transition">
+                  {entry.data.title}
+                </h4>
+                <p class="text-sm leading-7 text-[#5f5149]">{entry.data.excerpt}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </main>
+</BaseLayout>
