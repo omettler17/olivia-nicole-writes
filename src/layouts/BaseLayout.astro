@@ -28,7 +28,9 @@ const {
   brandLabel = 'Back to home',
 } = Astro.props
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+// Normalize to a trailing slash so canonical/og:url are consistent across pages.
+const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`
+const canonicalURL = new URL(pathname, Astro.site)
 const imageURL = new URL(image ?? withBase('images/olivia-headshot.png'), Astro.site)
 ---
 
