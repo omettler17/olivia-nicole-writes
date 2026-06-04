@@ -16,7 +16,7 @@ export async function GET(context) {
       title: post.data.title,
       description: post.data.excerpt,
       pubDate: post.data.date,
-      link: withBase(`blog/${post.slug}/`),
+      link: withBase(`blog/${post.id}/`),
     })),
   })
 }

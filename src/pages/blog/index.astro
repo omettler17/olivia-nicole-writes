@@ -40,8 +40,8 @@ const posts = (await getCollection('blog')).sort(
           <div class="grid gap-6 md:grid-cols-2">
             {posts.map((post) => (
               <a
-                href={withBase(`blog/${post.slug}/`)}
-                class="group block bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-sm shadow-[#af9d93]/10 transition hover:border-[#c3b198] hover:shadow-md sm:p-8"
+                href={withBase(`blog/${post.id}/`)}
+                class="group block bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-xs shadow-[#af9d93]/10 transition hover:border-[#c3b198] hover:shadow-md sm:p-8"
               >
                 <p class="uppercase tracking-[0.15em] text-sm text-[#8f766b] mb-4">
                   {formatDate(post.data.date)}
@@ -57,7 +57,7 @@ const posts = (await getCollection('blog')).sort(
             ))}
           </div>
         ) : (
-          <div class="bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-8 text-center shadow-sm shadow-[#af9d93]/10">
+          <div class="bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-8 text-center shadow-xs shadow-[#af9d93]/10">
             <h3 class="text-3xl mb-4">Dollywood blog coming soon!</h3>
             <p class="text-lg leading-8 text-[#5f5149] max-w-2xl mx-auto">
               The first post will be about a trip to Dollywood and Cherokee, Tennessee.

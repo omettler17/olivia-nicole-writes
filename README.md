@@ -11,7 +11,7 @@ Open Graph tags, plus a sitemap and RSS feed). Deployed to GitHub Pages.
 ## Run locally
 
 ```bash
-nvm use 20      # Node 20 required (Astro needs 18.20.8+, 20.3+, or 22+)
+nvm use 22      # Node 22 required (Astro 6 needs Node >= 22.12)
 npm install     # first time only
 npm run dev     # http://localhost:4321/olivia-nicole-writes/
 ```
