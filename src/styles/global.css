@@ -1,4 +1,10 @@
-/* Custom global styles. Tailwind base/utilities are injected by @astrojs/tailwind. */
+/* Tailwind 4 (via @tailwindcss/vite) + custom global styles. */
+@import 'tailwindcss';
+
+@theme {
+  /* Match the previous serif stack exactly (overrides Tailwind's default). */
+  --font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+}
 
 :root {
   color: #2f2722;

@@ -13,7 +13,7 @@ plain HTML at build time, so it loads fast and is fully indexable by search
 engines and social link previews. Almost no JavaScript ships to the browser
 (only a small script for the mobile menu, nav highlighting, and scroll behavior).
 
-- **Stack:** Astro 4, Tailwind CSS 3. Blog posts are Markdown content collections.
+- **Stack:** Astro 6, Tailwind CSS 4 (wired via PostCSS). Blog posts are Markdown content collections.
 - **Routing:** real paths (not hash routing). Routes:
   - `/` → home page
   - `/blog/` → blog index
@@ -24,8 +24,8 @@ engines and social link previews. Almost no JavaScript ships to the browser
 ## Running it locally
 
 ```bash
-# Node 20 is required (Astro needs 18.20.8+, 20.3+, or 22+).
-nvm use 20            # if this errors, run: nvm install 20
+# Node 22 is required (Astro 6 needs Node >= 22.12).
+nvm use 22            # if this errors, run: nvm install 22
 npm install           # first time only
 npm run dev           # serves http://localhost:4321/olivia-nicole-writes/
 ```
@@ -47,17 +47,17 @@ npm run preview       # serve the production build locally
 AGENTS.md             <- you are here
 README.md             human-facing setup + quick "add a post" steps
 astro.config.mjs      Astro config (site, base path, integrations, markdown)
-tailwind.config.js    Tailwind theme (serif font stack, content globs)
+postcss.config.mjs    Tailwind 4 via the @tailwindcss/postcss plugin
 src/
   consts.ts           site name, nav links, publications list, withBase() helper
-  styles/global.css   base styles + nav/menu states + Markdown ("post-body") styling
+  content.config.ts   blog collection schema (title, date, excerpt) + glob loader
+  styles/global.css   @import "tailwindcss" + @theme (serif font) + custom styles
   layouts/
     BaseLayout.astro  <html> shell: per-page <title>, meta, Open Graph, canonical
   components/
     Header.astro      sticky nav, mobile drawer, scroll-spy + menu scripts
     Footer.astro      footer (used on the home page only)
   content/
-    config.ts         blog collection schema (title, date, excerpt)
     blog/             ONE MARKDOWN FILE PER POST  <-- write posts here
       *.md
   pages/
@@ -96,7 +96,7 @@ Astro picks it up automatically — no other files to edit.
 
 3. Run `npm run dev` and open `http://localhost:4321/olivia-nicole-writes/blog/<slug>/`.
 
-### Frontmatter fields (validated by `src/content/config.ts`)
+### Frontmatter fields (validated by `src/content.config.ts`)
 
 | Field     | Required | Notes |
 |-----------|----------|-------|

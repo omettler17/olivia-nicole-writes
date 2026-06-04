@@ -1,18 +1,18 @@
 ---
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import { SITE_NAME, formatDate, withBase } from '../../consts'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog')
-  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }))
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }))
 }
 
 const { post } = Astro.props
-const { Content } = await post.render()
+const { Content } = await render(post)
 
 const recent = (await getCollection('blog'))
-  .filter((entry) => entry.slug !== post.slug)
+  .filter((entry) => entry.id !== post.id)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3)
 ---
@@ -33,7 +33,7 @@ const recent = (await getCollection('blog'))
 
     <article>
       <p class="uppercase tracking-[0.2em] text-sm text-[#8f766b] mb-5">{formatDate(post.data.date)}</p>
-      <h2 class="text-4xl leading-tight mb-8 md:text-6xl">{post.data.title}</h2>
+      <h2 class="text-4xl leading-none mb-8 md:text-6xl">{post.data.title}</h2>
       <div class="post-body">
         <Content />
       </div>
@@ -46,8 +46,8 @@ const recent = (await getCollection('blog'))
           <div class="grid gap-6 md:grid-cols-3">
             {recent.map((entry) => (
               <a
-                href={withBase(`blog/${entry.slug}/`)}
-                class="group block bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-sm shadow-[#af9d93]/10 transition hover:border-[#c3b198] hover:shadow-md"
+                href={withBase(`blog/${entry.id}/`)}
+                class="group block bg-[#fffdf9] border border-[#e6ded5] rounded-2xl p-6 shadow-xs shadow-[#af9d93]/10 transition hover:border-[#c3b198] hover:shadow-md"
               >
                 <p class="uppercase tracking-[0.15em] text-xs text-[#8f766b] mb-3">
                   {formatDate(entry.data.date)}
